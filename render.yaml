@@ -1,0 +1,20 @@
+services:
+  # Option A: Deploy Streamlit App
+  - type: web
+    name: airresolve-streamlit
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0 --server.enableCORS false --server.enableXsrfProtection false
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+
+  # Option B: Deploy Flask API & Web Portal
+  - type: web
+    name: airresolve-portal
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn api.index:app --bind 0.0.0.0:$PORT --workers 2 --threads 4
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9

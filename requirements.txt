@@ -1,6 +1,7 @@
 # Core Application Framework
 streamlit>=1.40.0
 flask>=3.0.0
+gunicorn>=21.0.0
 
 # Testing & Quality Assurance
 pytest>=9.0.0
