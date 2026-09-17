@@ -422,6 +422,8 @@ class PolicyEngine:
                     "Full night's hotel stay (exceeds policy scope)",
                 ],
                 action_items=[
+                    {"type": "MEAL_VOUCHER", "amount_inr": 500, "status": "ISSUED"},
+                    {"type": "LOUNGE_ACCESS", "status": "GRANTED"},
                     {
                         "type": "HOTEL_ACCOMMODATION",
                         "scope": "delayed_hours_only",

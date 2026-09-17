@@ -392,6 +392,15 @@ class ResolutionAgent:
 
             # Subcase B1: Arvind Kulkarni (4h delay - NOT ELIGIBLE)
             if delay_hours <= 5.0:
+                if delay_hours > 3.0:
+                    hotel_eval.action_items = [
+                        {"type": "MEAL_VOUCHER", "amount_inr": 500, "status": "ISSUED"},
+                        {"type": "LOUNGE_ACCESS", "status": "GRANTED"},
+                    ]
+                elif delay_hours > 0:
+                    hotel_eval.action_items = [
+                        {"type": "MEAL_VOUCHER", "amount_inr": 500, "status": "ISSUED"},
+                    ]
                 text = (
                     f"I understand the delay is frustrating, especially when you have connecting plans. "
                     f"Your flight {flight_num} is delayed by {delay_hours:.0f} hours. Under our policy, "

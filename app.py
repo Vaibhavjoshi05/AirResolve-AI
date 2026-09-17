@@ -287,7 +287,7 @@ with col_main:
 with col_inspector:
     last_resp = st.session_state.last_response[st.session_state.selected_pnr]
 
-    # ESCALATION BANNER (Shown prominently when triggered)
+    # ESCALATION BANNER & SUPERVISOR CONSOLE (Shown prominently when triggered)
     if last_resp and last_resp.escalation_ticket:
         ticket = last_resp.escalation_ticket
         st.markdown(f"""
@@ -303,6 +303,28 @@ with col_inspector:
                 </div>
             </div>
         """, unsafe_allow_html=True)
+
+        with st.expander("👨‍💼 Review as Duty Supervisor (Live Override Console)", expanded=True):
+            st.caption("As Duty Supervisor, review this ticket and choose a resolution:")
+            sup_notes = st.text_input("Supervisor Notes", value="Operational review completed.", key=f"notes_{ticket['ticket_id']}")
+            c_sup1, c_sup2 = st.columns(2)
+            if c_sup1.button("✔ Authorize Exception", key=f"btn_app_{ticket['ticket_id']}", use_container_width=True):
+                st.session_state.chat_history[st.session_state.selected_pnr].append({
+                    "role": "assistant",
+                    "content": f"👨‍💼 **Supervisor Authorization (Duty Manager Sharma)**: Exception approved for ticket `{ticket['ticket_id']}`.\n\n\"Authorized waiver granted under supervisor operational discretion. Passenger rebooked on requested alternate flight.\" (Notes: {sup_notes})",
+                    "suggested_actions": ["Download Updated Ticket", "View Booking Summary"]
+                })
+                st.session_state.last_response[st.session_state.selected_pnr].escalation_ticket = None
+                st.rerun()
+            if c_sup2.button("✖ Uphold Policy Limit", key=f"btn_uph_{ticket['ticket_id']}", use_container_width=True):
+                st.session_state.chat_history[st.session_state.selected_pnr].append({
+                    "role": "assistant",
+                    "content": f"👨‍💼 **Supervisor Decision (Duty Manager Sharma)**: Policy upheld for ticket `{ticket['ticket_id']}`.\n\n\"Standard airline service policy limits must be maintained. The frontline agent's policy determination is upheld.\" (Notes: {sup_notes})",
+                    "suggested_actions": ["View Delay Benefits", "Check Standard Rebooking"]
+                })
+                st.session_state.last_response[st.session_state.selected_pnr].escalation_ticket = None
+                st.rerun()
+
         st.markdown("<br>", unsafe_allow_html=True)
 
     # 1. LIVE POLICY ELIGIBILITY MATRIX
@@ -363,7 +385,48 @@ with col_inspector:
             st.markdown(f"""<div class="eligibility-cross"><span>✖</span> <span>{item}</span></div>""", unsafe_allow_html=True)
         st.markdown("""</div>""", unsafe_allow_html=True)
 
-    # 2. DECISION TRACE / AUDIT TRAIL (PROGRESSIVE DISCLOSURE)
+    # 2. DIGITAL PASSES & VOUCHERS WALLET
+    if last_resp and last_resp.decision and last_resp.decision.action_items:
+        st.markdown("""
+            <div style="font-size: 15px; font-weight: 800; color: #0F172A; margin-top: 14px; margin-bottom: 8px;">
+                🎟️ Digital Wallet & Issued Passes
+            </div>
+        """, unsafe_allow_html=True)
+        for act in last_resp.decision.action_items:
+            if act.get("type") == "MEAL_VOUCHER":
+                st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #0B192C, #1E3E62); color: white; padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; border: 1.5px solid #008DDA;">
+                        <div style="font-size: 10px; font-weight: 800; color: #38BDF8;">MEAL VOUCHER • ₹500 DINING CREDIT</div>
+                        <div style="font-size: 13px; font-weight: 700; margin-top: 2px;">Valid at all airport terminal dining outlets (23-Sep-2026)</div>
+                        <div style="font-family: monospace; font-size: 11px; color: #38BDF8; margin-top: 4px;">PASS: MEAL-{st.session_state.selected_pnr}-PASS</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            elif act.get("type") == "LOUNGE_ACCESS":
+                st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #0B192C, #1E3E62); color: white; padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; border: 1.5px solid #F59E0B;">
+                        <div style="font-size: 10px; font-weight: 800; color: #FCD34D;">LOUNGE ACCESS PASS • COMPLIMENTARY</div>
+                        <div style="font-size: 13px; font-weight: 700; margin-top: 2px;">Plaza Premium & Encalm Partner Lounges</div>
+                        <div style="font-family: monospace; font-size: 11px; color: #FCD34D; margin-top: 4px;">PASS: LNG-{st.session_state.selected_pnr}-VIP</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            elif act.get("type") == "HOTEL_ACCOMMODATION":
+                st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #0B192C, #1E3E62); color: white; padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; border: 1.5px solid #10B981;">
+                        <div style="font-size: 10px; font-weight: 800; color: #6EE7B7;">HOTEL DAY ROOM PASS • TRANSIT DELAY</div>
+                        <div style="font-size: 13px; font-weight: 700; margin-top: 2px;">Transit accommodation for delayed hours (not overnight)</div>
+                        <div style="font-family: monospace; font-size: 11px; color: #6EE7B7; margin-top: 4px;">PASS: HTL-{st.session_state.selected_pnr}-DAY</div>
+                    </div>
+                """, unsafe_allow_html=True)
+            elif act.get("action") == "INITIATE_FULL_REFUND":
+                st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #0B192C, #1E3E62); color: white; padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; border: 1.5px solid #38BDF8;">
+                        <div style="font-size: 10px; font-weight: 800; color: #38BDF8;">100% FULL REFUND INITIATED</div>
+                        <div style="font-size: 13px; font-weight: 700; margin-top: 2px;">Credited in full within 7 business days to original payment method</div>
+                        <div style="font-family: monospace; font-size: 11px; color: #38BDF8; margin-top: 4px;">REF: RFND-{st.session_state.selected_pnr}-AUTH</div>
+                    </div>
+                """, unsafe_allow_html=True)
+
+    # 3. DECISION TRACE / AUDIT TRAIL (PROGRESSIVE DISCLOSURE)
     st.markdown("""
         <div style="font-size: 15px; font-weight: 800; color: #0F172A; margin-top: 14px; margin-bottom: 8px;">
             🔍 Decision Trace & Audit Trail

@@ -94,6 +94,31 @@ def chat():
     return jsonify(response.to_dict())
 
 
+@app.route("/api/supervisor/resolve", methods=["POST"])
+def resolve_escalation():
+    """Supervisor decision endpoint to approve exception or uphold policy on escalated tickets."""
+    data = request.get_json(force=True, silent=True) or {}
+    ticket_id = data.get("ticket_id", "ESC-GENERAL")
+    action = data.get("action", "UPHOLD")  # "APPROVE" or "UPHOLD"
+    notes = data.get("notes", "").strip()
+    supervisor = data.get("supervisor", "Duty Supervisor Sharma (Airport Ops)")
+
+    if action == "APPROVE":
+        status = "RESOLVED_EXCEPTION_APPROVED"
+        verdict = f"Approved exception for ticket {ticket_id}. Supervisor notes: {notes or 'Specialist waiver authorized under operational review.'}"
+    else:
+        status = "RESOLVED_POLICY_UPHELD"
+        verdict = f"Policy limits upheld for ticket {ticket_id}. Supervisor notes: {notes or 'Standard airline compensation and waiver limits enforced.'}"
+
+    return jsonify({
+        "ticket_id": ticket_id,
+        "status": status,
+        "supervisor": supervisor,
+        "resolution_verdict": verdict,
+        "timestamp": "2026-09-23 18:50:00 IST"
+    })
+
+
 # Serve static web frontend when deployed or run locally
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
