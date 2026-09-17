@@ -1,0 +1,14 @@
+# Core Application Framework
+streamlit>=1.40.0
+flask>=3.0.0
+
+# Testing & Quality Assurance
+pytest>=9.0.0
+
+# Documentation & Assets Generation
+python-pptx>=1.0.0
+matplotlib>=3.10.0
+
+# Data & Utilities
+python-dateutil>=2.9.0
+typing-extensions>=4.12.0

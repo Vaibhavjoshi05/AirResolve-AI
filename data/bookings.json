@@ -1,0 +1,98 @@
+{
+  "bookings": {
+    "SK4821X": {
+      "booking_reference": "SK4821X",
+      "customer_name": "Priya Nair",
+      "segments": [
+        {
+          "flight_number": "SK-204",
+          "route": {
+            "origin": "DEL",
+            "origin_name": "Delhi",
+            "destination": "GOI",
+            "destination_name": "Goa"
+          },
+          "date": "2026-09-23",
+          "date_display": "Wed 23 Sep 2026",
+          "scheduled_departure": "18:40",
+          "status": "Cancelled",
+          "cancellation_reason": "operational reasons",
+          "delay_duration_hours": 0.0,
+          "is_airline_caused": true,
+          "cabin_class": "Economy",
+          "seat": "14A"
+        },
+        {
+          "flight_number": "Return",
+          "route": {
+            "origin": "GOI",
+            "origin_name": "Goa",
+            "destination": "DEL",
+            "destination_name": "Delhi"
+          },
+          "date": "2026-09-25",
+          "date_display": "Fri 25 Sep 2026",
+          "scheduled_departure": "16:20",
+          "status": "Unaffected",
+          "cancellation_reason": null,
+          "delay_duration_hours": 0.0,
+          "is_airline_caused": false,
+          "cabin_class": "Economy",
+          "seat": "12B"
+        }
+      ]
+    },
+    "TR1190B": {
+      "booking_reference": "TR1190B",
+      "customer_name": "Arvind Kulkarni",
+      "segments": [
+        {
+          "flight_number": "SK-118",
+          "route": {
+            "origin": "BOM",
+            "origin_name": "Mumbai",
+            "destination": "BLR",
+            "destination_name": "Bengaluru"
+          },
+          "date": "2026-09-23",
+          "date_display": "Wed 23 Sep 2026",
+          "scheduled_departure": "07:10",
+          "new_departure": "11:10",
+          "status": "Delayed",
+          "cancellation_reason": null,
+          "delay_duration_hours": 4.0,
+          "delay_description": "Delayed 4h (new departure 11:10)",
+          "is_airline_caused": true,
+          "cabin_class": "Economy",
+          "seat": "19C"
+        }
+      ]
+    },
+    "WL7742": {
+      "booking_reference": "WL7742",
+      "customer_name": "Meher Kaur",
+      "segments": [
+        {
+          "flight_number": "SK-305",
+          "route": {
+            "origin": "DEL",
+            "origin_name": "Delhi",
+            "destination": "HYD",
+            "destination_name": "Hyderabad"
+          },
+          "date": "2026-09-23",
+          "date_display": "Wed 23 Sep 2026",
+          "scheduled_departure": "14:00",
+          "new_departure": "20:00",
+          "status": "Delayed",
+          "cancellation_reason": null,
+          "delay_duration_hours": 6.0,
+          "delay_description": "Delayed 6h (new departure 20:00)",
+          "is_airline_caused": true,
+          "cabin_class": "Economy",
+          "seat": "04D"
+        }
+      ]
+    }
+  }
+}

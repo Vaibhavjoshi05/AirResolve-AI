@@ -1,0 +1,201 @@
+/* AirResolve Custom Modern UI Theme */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --primary-navy: #0B192C;
+    --secondary-navy: #1E3E62;
+    --accent-blue: #008DDA;
+    --accent-cyan: #00ADB5;
+    --gold-tier: #F4B41A;
+    --silver-tier: #A0AEC0;
+    --platinum-tier: #E2E8F0;
+    --bg-light: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-primary: #0F172A;
+    --text-muted: #64748B;
+    --border-color: #E2E8F0;
+    --success-green: #10B981;
+    --danger-red: #EF4444;
+    --warning-amber: #F59E0B;
+}
+
+html, body, [class*="css"] {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Header styling */
+.brand-header {
+    background: linear-gradient(135deg, #0B192C 0%, #1E3E62 100%);
+    padding: 24px 32px;
+    border-radius: 16px;
+    color: white;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 25px -5px rgba(11, 25, 44, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-badge {
+    background: rgba(0, 141, 218, 0.2);
+    border: 1px solid #008DDA;
+    color: #38BDF8;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.brand-sub {
+    font-size: 13.5px;
+    color: #94A3B8;
+    margin-top: 4px;
+}
+
+/* Card Containers */
+.air-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+    margin-bottom: 16px;
+    transition: all 0.2s ease;
+}
+
+.air-card:hover {
+    box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.09);
+}
+
+/* Disruption Banner */
+.disruption-banner-cancelled {
+    background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%);
+    border-left: 5px solid #EF4444;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+}
+
+.disruption-banner-delayed {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border-left: 5px solid #F59E0B;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+}
+
+/* Status Chips */
+.badge-cancelled {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    border: 1px solid #FCA5A5;
+}
+
+.badge-delayed {
+    background-color: #FEF3C7;
+    color: #B45309;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    border: 1px solid #FCD34D;
+}
+
+.badge-tier-gold {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    color: #92400E;
+    border: 1px solid #F59E0B;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+}
+
+.badge-tier-platinum {
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+    color: #334155;
+    border: 1px solid #94A3B8;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+}
+
+.badge-tier-silver {
+    background: #F8FAFC;
+    color: #475569;
+    border: 1px solid #CBD5E1;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+}
+
+/* Decision Trace */
+.trace-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-left: 3px solid #008DDA;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    color: #1E293B;
+}
+
+/* Escalation Banner */
+.escalation-box {
+    background: #FFF1F2;
+    border: 1.5px solid #F43F5E;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 12px;
+}
+
+.escalation-title {
+    color: #BE123C;
+    font-weight: 800;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+/* Eligibility list */
+.eligibility-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #065F46;
+    margin-bottom: 6px;
+}
+
+.eligibility-cross {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #991B1B;
+    margin-bottom: 6px;
+}

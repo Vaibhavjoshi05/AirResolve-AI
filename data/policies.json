@@ -1,0 +1,83 @@
+{
+  "source": "Assignment 3 Data Pack: Customer-Facing Resolution Agent (Airline Disruption)",
+  "effective_date": "2026-09-23",
+  "rules": {
+    "cancellation_rebooking_rule": {
+      "id": "RULE_CANCELLATION_REBOOKING",
+      "name": "Cancellation Rebooking Rule",
+      "text": "If a flight is cancelled by the airline, the customer is entitled to a free rebooking on the next available flight within 24 hours, or a full refund, customer's choice.",
+      "conditions": {
+        "airline_caused_only": true,
+        "max_rebooking_window_hours": 24,
+        "customer_choice": ["free_rebooking", "full_refund"]
+      }
+    },
+    "delay_compensation_rule": {
+      "id": "RULE_DELAY_COMPENSATION",
+      "name": "Delay Compensation Rule",
+      "tiers": [
+        {
+          "threshold": "under_3_hours",
+          "min_hours": 0.0,
+          "max_hours": 3.0,
+          "inclusive_max": false,
+          "benefits": ["₹500 meal voucher"],
+          "description": "Delay under 3 hours: ₹500 meal voucher"
+        },
+        {
+          "threshold": "more_than_3_hours",
+          "min_hours": 3.0,
+          "max_hours": 5.0,
+          "inclusive_min": false,
+          "inclusive_max": true,
+          "benefits": ["₹500 meal voucher", "lounge access"],
+          "description": "Delay more than 3 hours: meal voucher + lounge access"
+        },
+        {
+          "threshold": "more_than_5_hours",
+          "min_hours": 5.0,
+          "max_hours": null,
+          "inclusive_min": false,
+          "benefits": ["₹500 meal voucher", "lounge access", "hotel accommodation covering only the delayed hours"],
+          "hotel_scope": "covering only the delayed hours (not a full night's stay)",
+          "description": "Delay more than 5 hours: meal voucher + hotel accommodation, covering only the delayed hours (not a full night's stay)"
+        }
+      ]
+    },
+    "refund_processing_rule": {
+      "id": "RULE_REFUND_PROCESSING",
+      "name": "Refund Processing Rule",
+      "text": "Refunds for airline-caused cancellations are processed in full within 7 business days. Refunds are issued to the original payment method only.",
+      "processing_time_business_days": 7,
+      "original_payment_method_only": true
+    },
+    "fare_difference_rule": {
+      "id": "RULE_FARE_DIFFERENCE",
+      "name": "Fare Difference Rule",
+      "text": "If a customer voluntarily chooses to rebook on a higher-fare flight (not airline-caused), they must pay the fare difference. Agents cannot waive fare differences above ₹1,500 without supervisor approval.",
+      "agent_waiver_limit_inr": 1500,
+      "requires_supervisor_above_limit": true
+    },
+    "loyalty_tier_rule": {
+      "id": "RULE_LOYALTY_TIER",
+      "name": "Loyalty Tier Rule",
+      "text": "Gold and Platinum tier customers get priority rebooking (first access to next-available seats) but no additional compensation beyond the standard policy.",
+      "priority_rebooking_tiers": ["Gold", "Platinum"],
+      "additional_compensation_permitted": false
+    }
+  },
+  "allowed_actions": [
+    "Rebook the customer on the next available flight within 24 hours at no charge (airline-caused disruption)",
+    "Issue meal vouchers and lounge access per the delay compensation rule",
+    "Arrange hotel accommodation for the delayed-hours portion, where the delay qualifies (>5h)",
+    "Initiate a refund request for airline-caused cancellations",
+    "Provide the customer's own booking and flight status information"
+  ],
+  "prohibited_actions": [
+    "Approving any compensation beyond the stated policy amounts",
+    "Waiving a fare difference above ₹1,500",
+    "Making exceptions for non-airline-caused disruptions (e.g., customer missed the flight)",
+    "Handling threats of legal action or formal complaints — must be escalated immediately",
+    "Processing refunds to a different payment method than the original"
+  ]
+}
